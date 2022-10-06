@@ -1,4 +1,5 @@
 #include "monty.h"
+#include <ctype.h>
 /**
  * check_for_digit - checks a string contains digits
  * @arg: string
@@ -25,15 +26,16 @@ static int check_for_digit(char *arg)
  */
 void m_push(stack_t **stack, unsigned int line_number)
 {
-	char *args;
+	char *arg;
 	int n;
 
 	arg = strtok(NULL, "\n\t\r ");
 	if (arg == NULL || check_for_digit(arg))
 	{
-		dprintf(STOUT_FILENO,
+		dprintf(STDOUT_FILENO,
 				"L%u: usage: push integer\n",
-				line_number);
+			       	line_number);
+		exit(EXIT_FAILURE);
 	}
 	n = atoi(arg);
 	if (!add_node(stack, n))
@@ -41,5 +43,5 @@ void m_push(stack_t **stack, unsigned int line_number)
 		dprintf(STDOUT_FILENO, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-	var.stack_len++
+	var.stack_len++;
 }
